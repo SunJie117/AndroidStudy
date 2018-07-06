@@ -12,9 +12,13 @@ import android.widget.Toast;
 
 import com.camark.androidstudy.R;
 
+import java.util.ArrayList;
+
 public class QuizActivity extends AppCompatActivity {
     private static final String TAG = "QuizActivity";
     private static final String KEY_INDEX = "index";
+    private static final String KEY_TRUE_INDEX_LIST = "trueIndexList";
+    private static final String KEY_FALSE_INDEX_LIST = "falseIndexList";
 
     private Button mTrueButton;
     private Button mFalseButton;
@@ -31,6 +35,8 @@ public class QuizActivity extends AppCompatActivity {
             new Question(R.string.question_asia, true)
     };
     private int mCurrentIndex = 0;
+    private ArrayList<Integer> mTrueIndexList;
+    private ArrayList<Integer> mFalseIndexList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,11 @@ public class QuizActivity extends AppCompatActivity {
 
         if (savedInstanceState != null) {
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX,0);
+            mTrueIndexList = savedInstanceState.getIntegerArrayList(KEY_TRUE_INDEX_LIST);
+            mFalseIndexList = savedInstanceState.getIntegerArrayList(KEY_FALSE_INDEX_LIST);
+        } else {
+            mTrueIndexList = new ArrayList<>();
+            mFalseIndexList = new ArrayList<>();
         }
 
         mTrueButton = (Button) findViewById(R.id.true_button);
@@ -123,14 +134,21 @@ public class QuizActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         Log.d(TAG,"onSaveInstanceState(Bundle outState) called");
         outState.putInt(KEY_INDEX,mCurrentIndex);
+
     }
 
     /**
      * 更新问题TextView的显示
      */
     private void updateQuestion() {
+        //Log.d(TAG, "Updating question text ", new Exception());
         int question = mQuestionBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
+
+        boolean buttonEnabled = !mFalseIndexList.contains(mCurrentIndex) && !mTrueIndexList.contains(mCurrentIndex);
+
+        mFalseButton.setEnabled(buttonEnabled);
+        mTrueButton.setEnabled(buttonEnabled);
     }
 
     /**
@@ -139,14 +157,35 @@ public class QuizActivity extends AppCompatActivity {
     private void checkAnswer(boolean userPressedTrue) {
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
 
-        int messageResId = 0;
-        if (userPressedTrue == answerIsTrue) {
-            messageResId = R.string.correct_toast;
-        } else {
-            messageResId = R.string.incorrect_toast;
+        int messageResId;
+        if (!mTrueIndexList.contains(mCurrentIndex) && !mFalseIndexList.contains(mCurrentIndex)) {
+            if (userPressedTrue == answerIsTrue) {
 
+                mTrueIndexList.add(mCurrentIndex);
+
+
+                messageResId = R.string.correct_toast;
+
+            } else {
+                mFalseIndexList.add(mCurrentIndex);
+
+
+                messageResId = R.string.incorrect_toast;
+
+            }
+            Toast.makeText(this,messageResId,Toast.LENGTH_SHORT).show();
         }
 
-        Toast.makeText(this,messageResId,Toast.LENGTH_SHORT).show();
+        updateQuestion();
+
+
+
+        if (isFinishQuestion()) {
+            Toast.makeText(this,String.format("正确率  %.0f%% ",mTrueIndexList.size()*1.0/mQuestionBank.length*100),Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private boolean isFinishQuestion() {
+        return (mTrueIndexList.size() + mFalseIndexList.size()) >= mQuestionBank.length;
     }
 }
