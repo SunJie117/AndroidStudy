@@ -25,6 +25,7 @@ public class CheatActivity extends AppCompatActivity {
     private boolean mAnswerIsTrue;
     private TextView mAnswerTextView;
     private Button mShowAnswerButton;
+    private TextView mVersionCodeTextView;
 
 
     public static Intent newIntent(Context packageContext, boolean answerIsTrue) {
@@ -41,10 +42,15 @@ public class CheatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheat);
-        mAnswerIsTrue = getIntent().getBooleanExtra(EXTRA_ANSWER_IS_TRUE,false);
+        mAnswerIsTrue = getIntent().getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false);
+
+        mVersionCodeTextView = (TextView) findViewById(R.id.version_code_text_view);
+
+        mVersionCodeTextView.setText(Build.VERSION.SDK_INT+ "");
+
 
         mAnswerTextView = (TextView) findViewById(R.id.answer_text_view);
-        mShowAnswerButton= (Button) findViewById(R.id.show_answer_button);
+        mShowAnswerButton = (Button) findViewById(R.id.show_answer_button);
         mShowAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +62,7 @@ public class CheatActivity extends AppCompatActivity {
 
                 setAnswerShownResult(true);
 
-
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     int cx = mShowAnswerButton.getWidth() / 2;
                     int cy = mShowAnswerButton.getHeight() / 2;
                     float radius = mShowAnswerButton.getWidth();
@@ -70,7 +76,9 @@ public class CheatActivity extends AppCompatActivity {
                         }
                     });
                     anim.start();
-
+                } else {
+                    mShowAnswerButton.setVisibility(View.INVISIBLE);
+                }
 
 
             }

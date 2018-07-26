@@ -13,11 +13,13 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.camark.androidstudy.com.camark.geoquiz.QuizActivity;
+import com.camark.androidstudy.criminalintent.CrimeActivity;
 
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_WRITE = 1;//申请权限的请求码
 
     private Button mGeoQuizButton;
+    private Button mCrimeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, QuizActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mCrimeButton = (Button) findViewById(R.id.crime_button);
+
+        mCrimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CrimeActivity.class);
                 startActivity(intent);
             }
         });
