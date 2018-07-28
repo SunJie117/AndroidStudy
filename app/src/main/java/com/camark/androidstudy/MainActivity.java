@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.camark.androidstudy.com.camark.geoquiz.QuizActivity;
 import com.camark.androidstudy.criminalintent.CrimeActivity;
+import com.camark.androidstudy.criminalintent.CrimeListActivity;
 
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_WRITE = 1;//申请权限的请求码
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         mCrimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, CrimeActivity.class);
+                Intent intent = new Intent(MainActivity.this, CrimeListActivity.class);
                 startActivity(intent);
             }
         });
