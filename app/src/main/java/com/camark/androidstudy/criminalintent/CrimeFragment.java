@@ -186,10 +186,13 @@ public class CrimeFragment extends Fragment {
             // Specify which fields you want your query to return
             // values for.
             String[] queryFields = new String[]{
-                    ContactsContract.Contacts.DISPLAY_NAME,ContactsContract.Contacts.
+                    ContactsContract.Contacts.DISPLAY_NAME,ContactsContract.Contacts._ID
             };
+
+
             // Perform your query - the contactUri is like a "where"
             // clause here
+            String contactId;
             Cursor c = getActivity().getContentResolver()
                     .query(contactUri, queryFields, null, null, null);
             try {
@@ -200,8 +203,33 @@ public class CrimeFragment extends Fragment {
             // Pull out the first column of the first row of data -
             // that is your suspect's name
                 c.moveToFirst();
-                String suspect = c.getString(1);
+                String suspect = c.getString(0);
+                contactId =  c.getString(1);
                 mCrime.setSuspect(suspect);
+                mSuspectButton.setText(suspect);
+            } finally {
+                c.close();
+            }
+
+            queryFields = new String[]{
+                    ContactsContract.CommonDataKinds.Phone.NUMBER
+            };
+
+
+
+            c = getActivity().getContentResolver()
+                    .query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, queryFields,
+                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?" ,  new String[]{contactId}, null);
+            try {
+                // Double-check that you actually got results
+                if (c.getCount() == 0) {
+                    return;
+                }
+                // Pull out the first column of the first row of data -
+                // that is your suspect's name
+                c.moveToFirst();
+                String suspect = c.getString(0);
+
                 mSuspectButton.setText(suspect);
             } finally {
                 c.close();

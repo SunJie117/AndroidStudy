@@ -18,6 +18,7 @@ import com.camark.androidstudy.criminalintent.CrimeListActivity;
 
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_WRITE = 1;//申请权限的请求码
+    private static final int REQUEST_READ_CONTACTS = 2;//申请读取联系人
 
     private Button mGeoQuizButton;
     private Button mCrimeButton;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if (hasWriteExternalStoragePermission()) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_READ_CONTACTS);
 
         } else {
 
@@ -60,15 +62,25 @@ public class MainActivity extends AppCompatActivity {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
+    private boolean hasReadContactsPermission() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
         switch (requestCode) {
             case REQUEST_WRITE:
                 if (hasWriteExternalStoragePermission()) {
-
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_READ_CONTACTS);
                 } else {
                     Toast.makeText(this, "需要读写SD卡权限!", 1).show();
+                }
+                break;
+            case REQUEST_READ_CONTACTS:
+                if (hasReadContactsPermission()) {
+                } else {
+                    Toast.makeText(this, "需要读取联系人权限!", 1).show();
                 }
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
