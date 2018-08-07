@@ -19,6 +19,9 @@ import java.util.Date;
 
 public class DatePickerFragment extends DialogFragment {
     private static final String ARG_DATE = "date";
+    public static final String EXTRA_DATE =
+            "com.camark.androidstudy.criminalintent.date";
+
     private DatePicker mDatePicker;
     public static DatePickerFragment newInstance(Date date) {
         Bundle args = new Bundle();
@@ -50,4 +53,5 @@ public class DatePickerFragment extends DialogFragment {
                 .setPositiveButton(android.R.string.ok, null)
                 .create();
     }
+
 }

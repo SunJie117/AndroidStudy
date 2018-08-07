@@ -66,7 +66,7 @@ public class CrimeLab {
         } finally {
             cursor.close();
         }
-    }
+
     }
 
     public void addCrime(Crime c) {
