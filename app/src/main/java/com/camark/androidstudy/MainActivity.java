@@ -29,7 +29,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if (hasWriteExternalStoragePermission()) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_READ_CONTACTS);
+            if (hasReadContactsPermission()) {
+
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_READ_CONTACTS);
+            }
+
 
         } else {
 
@@ -72,7 +77,11 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case REQUEST_WRITE:
                 if (hasWriteExternalStoragePermission()) {
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_READ_CONTACTS);
+                    if (hasReadContactsPermission()) {
+
+                    } else {
+                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_READ_CONTACTS);
+                    }
                 } else {
                     Toast.makeText(this, "需要读写SD卡权限!", 1).show();
                 }
