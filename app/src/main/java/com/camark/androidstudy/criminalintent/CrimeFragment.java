@@ -58,6 +58,20 @@ public class CrimeFragment extends Fragment {
     private ImageView mPhotoView;
 
     private File mPhotoFile;
+    private Callbacks mCallbacks;
+
+    /**
+     * Required interface for hosting activities
+     */
+    public interface Callbacks {
+        void onCrimeUpdated(Crime crime);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
 
 
     public static CrimeFragment newInstance(UUID crimeId) {
@@ -101,6 +115,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mCrime.setTitle(s.toString());
+                updateCrime();
             }
 
             @Override
@@ -127,6 +142,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mCrime.setSolved(isChecked);
+                updateCrime();
             }
         });
 
@@ -233,6 +249,7 @@ public class CrimeFragment extends Fragment {
             Date date = (Date) data
                     .getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             mCrime.setDate(date);
+            updateCrime();
             updateDate();
         } else if (requestCode == REQUEST_CONTACT && data != null) {
             Uri contactUri = data.getData();
@@ -259,6 +276,7 @@ public class CrimeFragment extends Fragment {
                 String suspect = c.getString(0);
                 contactId =  c.getString(1);
                 mCrime.setSuspect(suspect);
+                updateCrime();
                 mSuspectButton.setText(suspect);
             } finally {
                 c.close();
@@ -297,12 +315,18 @@ public class CrimeFragment extends Fragment {
             /*
                 getActivity().grantUriPermission(activity.activityInfo.packageName,uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
              */
+            updateCrime();
             updatePhotoView();
         }
     }
 
     private void updateDate() {
         mDateButton.setText(mCrime.getDate().toString());
+    }
+
+    private void updateCrime() {
+        CrimeLab.get(getActivity()).updateCrime(mCrime);
+        mCallbacks.onCrimeUpdated(mCrime);
     }
 
 

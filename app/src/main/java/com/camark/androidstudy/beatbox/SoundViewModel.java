@@ -20,6 +20,8 @@ public class SoundViewModel extends BaseObservable {
     public void setSound(Sound sound) {
         mSound = sound;
         notifyChange();
+        //notifyPropertyChanged(BR.title);
+
     }
 
     @Bindable
