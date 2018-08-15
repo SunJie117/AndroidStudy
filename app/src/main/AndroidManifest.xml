@@ -42,6 +42,8 @@
 
         <activity android:name=".beatbox.BeatBoxActivity">
         </activity>
+        <activity android:name=".testsetarguments.FramentTestActivity">
+        </activity>
     </application>
 
 </manifest>

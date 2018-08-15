@@ -22,6 +22,7 @@
     <string name="crime_details_label">Details</string>
     <string name="crime_solved_label">Solved</string>
     <string name="crime_button">crime</string>
+    <string name="set_arguments_button">setArguments</string>
     <string name="date_picker_title">Date of crime:</string>
     <string name="new_crime">New Crime</string>
     <string name="show_subtitle">Show Subtitle</string>

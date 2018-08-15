@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -39,7 +40,8 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
         mViewPager = (ViewPager) findViewById(R.id.crime_view_pager);
         mCrimes = CrimeLab.get(this).getCrimes();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
+
+        /*mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
 
 
             @Override
@@ -48,6 +50,19 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
                 return CrimeFragment.newInstance(crime.getId());
 
             }
+            @Override
+            public int getCount() {
+                return mCrimes.size();
+            }
+        });*/
+
+        mViewPager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
+            @Override
+            public Fragment getItem(int position) {
+                Crime crime = mCrimes.get(position);
+                return CrimeFragment.newInstance(crime.getId());
+            }
+
             @Override
             public int getCount() {
                 return mCrimes.size();

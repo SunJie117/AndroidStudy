@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.camark.androidstudy.com.camark.geoquiz.QuizActivity;
 import com.camark.androidstudy.criminalintent.CrimeActivity;
 import com.camark.androidstudy.criminalintent.CrimeListActivity;
+import com.camark.androidstudy.testsetarguments.FramentTestActivity;
 
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_WRITE = 1;//申请权限的请求码
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mGeoQuizButton;
     private Button mCrimeButton;
+    private Button mSetArgumentsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, CrimeListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mSetArgumentsButton = (Button) findViewById(R.id.set_arguments_button);
+        mSetArgumentsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, FramentTestActivity.class);
                 startActivity(intent);
             }
         });

@@ -20,8 +20,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/crime_button"/>
-
-
-
+        <Button
+            android:id="@+id/set_arguments_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_arguments_button"/>
     </LinearLayout>
 </LinearLayout>
