@@ -168,6 +168,8 @@ public class CrimeFragment extends Fragment {
             }
         });
 
+
+
         mReportButton = (Button) v.findViewById(R.id.crime_report);
         mReportButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -176,8 +178,16 @@ public class CrimeFragment extends Fragment {
                 i.putExtra(Intent.EXTRA_TEXT, getCrimeReport());
                 i.putExtra(Intent.EXTRA_SUBJECT,
                         getString(R.string.crime_report_subject));
-                i = Intent.createChooser(i, getString(R.string.send_report));
-                startActivity(i);
+
+                PackageManager packageManager = getActivity().getPackageManager();
+                ResolveInfo info = packageManager.resolveActivity(i,PackageManager.MATCH_DEFAULT_ONLY);
+
+                if (info != null) {
+                    Log.i(TAG,info.activityInfo.packageName);
+                    i = Intent.createChooser(i, getString(R.string.send_report));
+                    startActivity(i);
+                }
+
             }
         });
 
