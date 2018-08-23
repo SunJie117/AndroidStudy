@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.camark.androidstudy.beatbox.BeatBoxActivity;
 import com.camark.androidstudy.com.camark.geoquiz.QuizActivity;
 import com.camark.androidstudy.criminalintent.CrimeActivity;
 import com.camark.androidstudy.criminalintent.CrimeListActivity;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mGeoQuizButton;
     private Button mCrimeButton;
     private Button mSetArgumentsButton;
+    private Button mBeatboxButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        mBeatboxButton = (Button) findViewById(R.id.beat_box_button);
+        mBeatboxButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, BeatBoxActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private boolean hasWriteExternalStoragePermission() {

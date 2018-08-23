@@ -33,6 +33,14 @@ public class BeatBox {
 
     }
 
+    public void play(Sound sound) {
+        Integer soundId = sound.getSoundId();
+        if (soundId == null) {
+            return;
+        }
+        mSoundPool.play(soundId, 1.0f, 1.0f, 1, 0, 1.0f);
+    }
+
     private void loadSounds() {
         String[] soundNames;
         try {
@@ -63,5 +71,9 @@ public class BeatBox {
         AssetFileDescriptor afd = mAssets.openFd(sound.getAssetPath());
         int soundId = mSoundPool.load(afd, 1);
         sound.setSoundId(soundId);
+    }
+
+    public void release() {
+        mSoundPool.release();
     }
 }

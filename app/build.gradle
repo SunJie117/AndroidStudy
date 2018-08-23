@@ -30,5 +30,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
     compile 'com.android.support:recyclerview-v7:26.0.0-alpha1'
+    testCompile 'org.mockito:mockito-core:2.2.1'
+    testCompile 'org.hamcrest:hamcrest-junit:2.0.0.0'
     testCompile 'junit:junit:4.12'
 }
