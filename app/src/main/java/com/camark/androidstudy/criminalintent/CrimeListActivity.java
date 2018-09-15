@@ -2,6 +2,7 @@ package com.camark.androidstudy.criminalintent;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 
 import com.camark.androidstudy.R;
 
@@ -32,6 +33,16 @@ public class CrimeListActivity extends SingleFragmentActivity implements CrimeLi
                     .commit();
         }
 
+    }
+
+    @Override
+    public void onSetActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        }
     }
 
     @Override

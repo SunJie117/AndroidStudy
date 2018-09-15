@@ -28,8 +28,11 @@
         <activity android:name=".criminalintent.CrimeListActivity">
         </activity>
         <activity
-            android:name=".criminalintent.CrimePagerActivity"
-            android:parentActivityName=".criminalintent.CrimeListActivity">
+            android:name=".criminalintent.CrimePagerActivity">
+        <!--android:parentActivityName=".criminalintent.CrimeListActivity" -->
+
+
+
         </activity>
 
         <provider
